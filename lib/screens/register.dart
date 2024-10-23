@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 
 import '../components/containerclick.dart';
 import '../components/custometextfield.dart';
-class registerpage extends StatelessWidget {
-  const registerpage({super.key});
+import '../constants.dart';
 
+class registerpage extends StatelessWidget {
+  registerpage({super.key});
+  static String id = "register";
   @override
   Widget build(BuildContext context) {
-    return Scaffold( body: Container(
+    return Scaffold(
+      body: Container(
         // height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color(0xff28293F),
-              Color(0xff313853),
-            ])),
+          Color(0xff28293F),
+          Color(0xff313853),
+        ])),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Spacer(
-                  flex: 2,
-                ),
+          child: ListView(children: [
+            SizedBox(
+            height: 75,
+          ),
+
                 Image.asset('assets/photo/chat_app_logo.png', height: 150),
                 const Text(
                   textAlign: TextAlign.center,
@@ -31,13 +32,13 @@ class registerpage extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'RobotoSlab',
                       fontSize: 32,
-                      color: Colors.white),
+                      color: kPrimarycolor),
                 ),
-                const Spacer(
-                  flex: 1,
-                ),
+            SizedBox(
+              height: 75,
+            ),
                 const Text("Register page",
-                    style: TextStyle(color: Colors.white, fontSize: 26)),
+                    style: TextStyle(color: kPrimarycolor, fontSize: 26)),
                 const SizedBox(
                   height: 10,
                 ),
@@ -53,32 +54,32 @@ class registerpage extends StatelessWidget {
                 const SizedBox(
                   height: 23,
                 ),
-                 conclickclass(Texts: 'Register',),
+                conclickclass(
+                  Texts: 'Register',
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-               Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("dont have an account? ",
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: kPrimarycolor)),
                     GestureDetector(
-                     onTap: () {
-                       Navigator.pop(context);
-                     },
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Login",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: kPrimarycolor),
                       ),
                     )
                   ],
                 ),
-                const Spacer(
-                  flex: 3,
-                ),
+
               ]),
         ),
-      ),);
-
+      ),
+    );
   }
 }
