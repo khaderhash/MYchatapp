@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/containerclick.dart';
@@ -7,6 +8,8 @@ import '../constants.dart';
 class registerpage extends StatelessWidget {
   registerpage({super.key});
   static String id = "register";
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,18 +43,45 @@ class registerpage extends StatelessWidget {
               height: 10,
             ),
             textfieldclass(
+              onchange: (p0) {
+                email = p0;
+              },
               hinttext: 'user name',
             ),
             const SizedBox(
               height: 10,
             ),
             textfieldclass(
+              onchange: (p0) {
+                password = p0;
+              },
               hinttext: 'password',
             ),
             const SizedBox(
               height: 23,
             ),
             conclickclass(
+              ontap: () async {
+                try {
+                  var auth = FirebaseAuth.instance;
+                  UserCredential user =
+                      await auth.createUserWithEmailAndPassword(
+                          email: email!, password: password!);
+                } on FirebaseAuthException catch (ex) {
+                  if (ex.code == 'weak-password') {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(('The password provided is too weak'))));
+                  } else if (ex.code == 'email-already-in-use') {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            ('The account already exists for that email.'))));
+                  }
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(('success'))));
+                } catch (e) {
+                  print(e);
+                }
+              },
               Texts: 'Register',
             ),
             const SizedBox(
