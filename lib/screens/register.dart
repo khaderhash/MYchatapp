@@ -1,118 +1,133 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../components/containerclick.dart';
 import '../components/custometextfield.dart';
 import '../constants.dart';
+import '../helper/snakbarm.dart';
 
-class registerpage extends StatelessWidget {
+class registerpage extends StatefulWidget {
   registerpage({super.key});
   static String id = "register";
+
+  @override
+  State<registerpage> createState() => _registerpageState();
+}
+
+class _registerpageState extends State<registerpage> {
   String? email;
   String? password;
-  GlobalKey<FormState> formkey= GlobalKey();
+  bool isloading = false;
+  GlobalKey<FormState> formkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        // height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color(0xff28293F),
-          Color(0xff313853),
-        ])),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key:  formkey,
-            child: ListView(children: [
-              SizedBox(
-                height: 75,
-              ),
-              Image.asset('assets/photo/chat_app_logo.png', height: 150),
-              const Text(
-                textAlign: TextAlign.center,
-                "chat app",
-                style: TextStyle(
-                    fontFamily: 'RobotoSlab', fontSize: 32, color: kPrimarycolor),
-              ),
-              SizedBox(
-                height: 75,
-              ),
-              const Text("Register page",
-                  style: TextStyle(color: kPrimarycolor, fontSize: 26)),
-              const SizedBox(
-                height: 10,
-              ),
-              textfieldclass(
-                onchange: (p0) {
-                  email = p0;
-                },
-                hinttext: 'user name',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              textfieldclass(
-                onchange: (p0) {
-                  password = p0;
-                },
-                hinttext: 'password',
-              ),
-              const SizedBox(
-                height: 23,
-              ),
-              conclickclass(
-                ontap: () async {
-                 if(formkey.currentState!.validate()){
-                   try {
-                     await RUser();
-                   } on FirebaseAuthException catch (ex) {
-                     if (ex.code == 'weak-password') {
-                       SnakBM(context,
-                           message: 'The password provided is too weak');
-                     } else if (ex.code == 'email-already-in-use') {
-                       SnakBM(context,
-                           message: 'The account already exists for that email.');
-                     }
-                   } catch (e) {
-                     print(e);
-                   }
-                   SnakBM(context, message: 'succsess');
-                 }
-                },
-                Texts: 'Register',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("dont have an account? ",
-                      style: TextStyle(color: kPrimarycolor)),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: kPrimarycolor),
-                    ),
-                  )
-                ],
-              ),
-            ]),
+    return ModalProgressHUD(
+      inAsyncCall: isloading,
+      child: Scaffold(
+        body: Container(
+          // height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Color(0xff28293F),
+            Color(0xff313853),
+          ])),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: formkey,
+              child: ListView(children: [
+                SizedBox(
+                  height: 75,
+                ),
+                Image.asset('assets/photo/chat_app_logo.png', height: 150),
+                const Text(
+                  textAlign: TextAlign.center,
+                  "chat app",
+                  style: TextStyle(
+                      fontFamily: 'RobotoSlab',
+                      fontSize: 32,
+                      color: kPrimarycolor),
+                ),
+                SizedBox(
+                  height: 75,
+                ),
+                const Text("Register page",
+                    style: TextStyle(color: kPrimarycolor, fontSize: 26)),
+                const SizedBox(
+                  height: 10,
+                ),
+                textformfieldclass(
+                  onchange: (p0) {
+                    email = p0;
+                  },
+                  hinttext: 'user name',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                textformfieldclass(
+                  onchange: (p0) {
+                    password = p0;
+                  },
+                  hinttext: 'password',
+                ),
+                const SizedBox(
+                  height: 23,
+                ),
+                conclickclass(
+                  ontap: () async {
+                    if (formkey.currentState!.validate()) {
+                      isloading = true;
+                      setState(() {});
+                      try {
+                        await RUser();
+                        SnakBM(context, message: 'succsess');
+                        Navigator.pop(context);
+                      } on FirebaseAuthException catch (ex) {
+                        if (ex.code == 'weak-password') {
+                          SnakBM(context,
+                              message: 'The password provided is too weak');
+                        } else if (ex.code == 'email-already-in-use') {
+                          SnakBM(context,
+                              message:
+                                  'The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                      isloading = false;
+                      setState(() {});
+                    }
+                  },
+                  Texts: 'Register',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("dont have an account? ",
+                        style: TextStyle(color: kPrimarycolor)),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: kPrimarycolor),
+                      ),
+                    )
+                  ],
+                ),
+              ]),
+            ),
           ),
         ),
       ),
     );
-  }
-
-  void SnakBM(BuildContext context, {required String message}) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> RUser() async {
