@@ -1,4 +1,5 @@
 import 'package:chatapp/components/custometextfield.dart';
+import 'package:chatapp/screens/chatpage.dart';
 import 'package:chatapp/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -84,8 +85,8 @@ class _loginpageState extends State<loginpage> {
                         isloading = true;
                         setState(() {});
                         try {
-                          await loginuser();
-                          SnakBM(context, message: 'succsess');
+                           await loginuser();
+                          Navigator.pushNamed(context, Chatpage.id);
                         } on FirebaseAuthException catch (ex) {
                           if (ex.code == 'weak-password') {
                             SnakBM(context,
@@ -98,6 +99,7 @@ class _loginpageState extends State<loginpage> {
                         } catch (e) {
                           print(e);
                         }
+                        isloading=false;
                         setState(() {});
                       }
                     },

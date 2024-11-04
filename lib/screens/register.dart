@@ -86,16 +86,16 @@ class _registerpageState extends State<registerpage> {
                         SnakBM(context, message: 'succsess');
                         Navigator.pop(context);
                       } on FirebaseAuthException catch (ex) {
-                        if (ex.code == 'weak-password') {
+                        if (ex.code == 'user-not-found') {
                           SnakBM(context,
-                              message: 'The password provided is too weak');
-                        } else if (ex.code == 'email-already-in-use') {
+                              message: 'user not found');
+                        } else if (ex.code == 'worng-password') {
                           SnakBM(context,
                               message:
-                                  'The account already exists for that email.');
+                                  'There was an error.');
                         }
                       } catch (e) {
-                        print(e);
+                        SnakBM(context, message: 'error');
                       }
                       isloading = false;
                       setState(() {});
@@ -109,7 +109,7 @@ class _registerpageState extends State<registerpage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("dont have an account? ",
+                    Text("have an account? ",
                         style: TextStyle(color: kPrimarycolor)),
                     GestureDetector(
                       onTap: () {
