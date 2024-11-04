@@ -85,7 +85,7 @@ class _loginpageState extends State<loginpage> {
                         isloading = true;
                         setState(() {});
                         try {
-                           await loginuser();
+                          await loginuser();
                           Navigator.pushNamed(context, Chatpage.id);
                         } on FirebaseAuthException catch (ex) {
                           if (ex.code == 'weak-password') {
@@ -99,7 +99,7 @@ class _loginpageState extends State<loginpage> {
                         } catch (e) {
                           print(e);
                         }
-                        isloading=false;
+                        isloading = false;
                         setState(() {});
                       }
                     },

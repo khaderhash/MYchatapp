@@ -87,12 +87,9 @@ class _registerpageState extends State<registerpage> {
                         Navigator.pop(context);
                       } on FirebaseAuthException catch (ex) {
                         if (ex.code == 'user-not-found') {
-                          SnakBM(context,
-                              message: 'user not found');
+                          SnakBM(context, message: 'user not found');
                         } else if (ex.code == 'worng-password') {
-                          SnakBM(context,
-                              message:
-                                  'There was an error.');
+                          SnakBM(context, message: 'There was an error.');
                         }
                       } catch (e) {
                         SnakBM(context, message: 'error');

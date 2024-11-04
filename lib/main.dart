@@ -23,7 +23,7 @@ class Myapp extends StatelessWidget {
         routes: {
           'loginPage': (context) => loginpage(),
           registerpage.id: (context) => registerpage(),
-          Chatpage.id:(context)=>Chatpage()
+          Chatpage.id: (context) => Chatpage()
         },
         initialRoute: 'loginPage');
   }
