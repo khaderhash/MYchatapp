@@ -21,10 +21,10 @@ class Myapp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          'loginPage': (context) => loginpage(),
+          loginpage.id: (context) => loginpage(),
           registerpage.id: (context) => registerpage(),
           Chatpage.id: (context) => Chatpage()
         },
-        initialRoute: 'loginPage');
+        initialRoute: loginpage.id);
   }
 }
