@@ -7,13 +7,17 @@ import '../constants.dart';
 class Chatpage extends StatelessWidget {
   Chatpage({super.key});
   static String id = "chatpage";
+  final ScrollController _controller = ScrollController();
   CollectionReference messages =
       FirebaseFirestore.instance.collection(messagecolletion);
+
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: messages.get(),
+    String email = ModalRoute.of(context)!.settings.arguments as String;
+    return StreamBuilder<QuerySnapshot>(
+      stream: messages.orderBy(datetime, descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<MessageModel> messagelist = [];
@@ -40,6 +44,8 @@ class Chatpage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                      reverse: true,
+                      controller: _controller,
                       itemCount: messagelist.length,
                       itemBuilder: (BuildContext context, int index) {
                         return messagebuble(
@@ -53,8 +59,17 @@ class Chatpage extends StatelessWidget {
                     child: TextField(
                       controller: controller,
                       onSubmitted: (value) {
-                        messages.add({'message': value});
+                        messages.add({
+                          'message': value,
+                          datetime: DateTime.now(),
+                          'ID': email
+                        });
                         controller.clear();
+                        _controller.animateTo(
+                          0,
+                          duration: Duration(seconds: 2),
+                          curve: Curves.fastOutSlowIn,
+                        );
                       },
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.send, color: kPrimaryth),

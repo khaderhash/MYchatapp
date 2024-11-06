@@ -86,7 +86,8 @@ class _loginpageState extends State<loginpage> {
                         setState(() {});
                         try {
                           await loginuser();
-                          Navigator.pushNamed(context, Chatpage.id);
+                          Navigator.pushNamed(context, Chatpage.id,
+                              arguments: email);
                         } on FirebaseAuthException catch (ex) {
                           if (ex.code == 'weak-password') {
                             SnakBM(context,
