@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../models/messagemodel.dart';
 
 class messagebuble extends StatelessWidget {
-  const messagebuble({super.key});
+  messagebuble({super.key, required this.message});
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class messagebuble extends StatelessWidget {
               topRight: Radius.circular(20),
               bottomRight: Radius.circular(20),
             )),
-        child: Text("hi i am kheder", style: TextStyle(color: Colors.white)),
+        child: Text(message.message, style: TextStyle(color: Colors.white)),
       ),
     );
   }

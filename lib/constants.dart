@@ -1,3 +1,4 @@
+import 'package:chatapp/components/message.dart';
 import 'package:flutter/material.dart';
 
 const kPrimaryth = Color(0xff28293F);
