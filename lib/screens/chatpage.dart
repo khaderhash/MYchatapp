@@ -1,3 +1,4 @@
+import 'package:chatapp/components/MESSAGEFORFRIND.dart';
 import 'package:chatapp/components/message.dart';
 import 'package:chatapp/models/messagemodel.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +49,13 @@ class Chatpage extends StatelessWidget {
                       controller: _controller,
                       itemCount: messagelist.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return messagebuble(
-                          message: messagelist[index],
-                        );
+                        return messagelist[index].id == email
+                            ? messagebuble(
+                                message: messagelist[index],
+                              )
+                            : messagebuble2(
+                                message: messagelist[index],
+                              );
                       },
                     ),
                   ),

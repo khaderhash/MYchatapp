@@ -2,13 +2,18 @@ import 'package:chatapp/constants.dart';
 import 'package:flutter/material.dart';
 
 class textformfieldclass extends StatelessWidget {
-  textformfieldclass({super.key, required this.hinttext, this.onchange});
+  textformfieldclass(
+      {super.key,
+      this.obscureTe = false,
+      required this.hinttext,
+      this.onchange});
   String hinttext;
-
+  bool? obscureTe;
   Function(String)? onchange;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        obscureText: obscureTe!,
         validator: (value) {
           if (value!.isEmpty) {
             return 'field';

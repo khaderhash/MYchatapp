@@ -68,6 +68,7 @@ class _registerpageState extends State<registerpage> {
                   height: 10,
                 ),
                 textformfieldclass(
+                  obscureTe: true,
                   onchange: (p0) {
                     password = p0;
                   },

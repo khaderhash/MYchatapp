@@ -71,6 +71,7 @@ class _loginpageState extends State<loginpage> {
                     height: 10,
                   ),
                   textformfieldclass(
+                    obscureTe: true,
                     hinttext: 'password',
                     onchange: (p0) {
                       password = p0;
